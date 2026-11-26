@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check FAIL_CI sentinel
+        run: |
+          if [ -f FAIL_CI ]; then
+            echo "FAIL_CI sentinel present - failing CI"
+            exit 1
+          fi
+          echo "CI baseline ok"
